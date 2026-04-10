@@ -1,5 +1,9 @@
 import pandas as pd
 from sqlalchemy import create_engine
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # 1. CARGA DE DATOS
 df_clase1 = pd.read_csv(r"src\data\clase_1.csv", sep=';')
@@ -183,7 +187,9 @@ def subir_a_postgres(tuplas_tablas, db_url):
 tablas_generadas = generar_modelo_relacional()
 
 # 2. Configuras tus credenciales de Render
-URL_RENDER = "postgresql://sql_projecta_user:4eeUXZCJGO16gZHvWh9cvoC9uhKnA7sy@dpg-d7bnmfuuk2gs738uvdeg-a.frankfurt-postgres.render.com/sql_projecta"
+URL_RENDER = os.getenv("URL_RENDER")
+if not URL_RENDER:
+    raise ValueError("¡Error! No se encontró URL_RENDER.")
 
 # 3. Disparas la carga
 subir_a_postgres(tablas_generadas, URL_RENDER)
