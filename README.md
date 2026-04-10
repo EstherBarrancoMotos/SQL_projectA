@@ -69,3 +69,31 @@ python src/utils/main.py
 
 * **Idempotencia:** Actualmente, el pipeline está diseñado para una **carga inicial masiva** (`if_exists='append'`). Ejecutar el script múltiples veces sin vaciar la base de datos resultará en un error de `UniqueViolation` debido a las restricciones de la base de datos.
 * **Case Sensitivity:** El pipeline adapta automáticamente las columnas de los DataFrames a minúsculas en el momento de la carga para asegurar compatibilidad nativa con PostgreSQL.
+
+## Resultado final pgAdmin
+
+![Resultado final pgAdmin](./image.png)
+
+## Queries de prueba
+
+Puedes lanzar las comprobaciones con Python usando `src/utils/queries_prueba.py`.
+
+Ejecutar todas:
+
+```bash
+python src/utils/queries_prueba.py
+```
+
+Ejecutar solo una:
+
+```bash
+python src/utils/queries_prueba.py --query conteo_tablas
+```
+
+Queries disponibles:
+- comprobar que todas las tablas tienen registros,
+- revisar joins entre promociones, alumnos, profesores y proyectos,
+- verificar resultados por alumno y por proyecto,
+- detectar inconsistencias que deberian devolver 0 filas.
+
+Si prefieres SQL puro, tambien queda disponible `src/sql/queries_prueba.sql`.
